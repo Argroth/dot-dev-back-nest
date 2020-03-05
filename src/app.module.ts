@@ -14,7 +14,12 @@ import { MailerModule } from '@nestjs-modules/mailer';
         user: "mail@dot-dev.com",
         pass: "BHxWa3sH",
       },
+      tls: {
+        // do not fail on invalid certs
+        rejectUnauthorized: false
+      }
     },
+
     defaults: {
       from:'"Mailer .Dev" ',
     },

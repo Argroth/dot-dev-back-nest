@@ -7,21 +7,21 @@ export class EmailSenderService {
   }
 
   public sendEmail(body): Promise<JSON> {
-    this
+    const response = this
       .mailerService
       .sendMail({
         to: 'basic15pl@gmail.com', // list of receivers
         from: 'mail@dot-dev.com', // sender address
         subject: 'Testing Nest MailerModule ✔', // Subject line
         text: 'welcome', // plaintext body
-        html: '<b>welcome</b>', // HTML body content
+        html: '<b>welcomeh1 </b>'+body.name + 't o the jungle', // HTML body content
       })
       .then((success) => {
-        console.log(success);})
+        return success;})
       .catch((err) => {
-        console.log(err);
+        return err;
       });
-    return body;
+    return response;
   }
 
   async sendEmail2(body): Promise<JSON>{
