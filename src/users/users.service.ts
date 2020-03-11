@@ -14,13 +14,7 @@ export class UsersService {
   }
 
   async createUser(createUserDto: CreateUserDto): Promise<User> {
-    const generatedPassword = await bcrypt.hash(createUserDto.password, 10, async (err, hash): Promise<string> => {
-      console.log(hash);
-       return await hash;
-    });
-
-    console.log(generatedPassword);
-    const createdUser = await this.userModel(createUserDto);
-    return createdUser;
+    createUserDto.password =  await bcrypt.hash(createUserDto.password, 10);;
+    return this.userModel(createUserDto).save();
   }
 }
