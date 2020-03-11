@@ -13,6 +13,10 @@ export class UsersService {
     return await this.userModel.find().exec();
   }
 
+  async getUser(id): Promise<User>{
+    return await this.userModel.findById(id);
+  }
+
   async createUser(createUserDto: CreateUserDto): Promise<User> {
     createUserDto.password =  await bcrypt.hash(createUserDto.password, 10);
     return this.userModel(createUserDto).save();
