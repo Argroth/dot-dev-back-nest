@@ -1,26 +1,21 @@
-import { Controller, Get, Post, Res, Body, HttpStatus, Param } from '@nestjs/common';
+import { Controller, Get, Res, HttpStatus, Param } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  //get all users
   @Get()
   getUsers(): any{
     return this.usersService.getUsers();
   }
 
-  @Get('/user/:id')
+  //get single user by id
+  @Get('/:id')
   async getUser(@Res() res, @Param('id') id){
-    const user = await this.usersService.getUser(id);
-    console.log(user);
-    return res.status(HttpStatus.OK).json({user: user});
+    const token = await this.usersService.getUser(id);
+    return res.status(HttpStatus.OK).json({userToken: token});
   }
 
-  @Post()
-  async createUser(@Res() res, @Body() createUserDto: CreateUserDto){
-    const userCreated = await this.usersService.createUser(createUserDto);
-    return res.status(HttpStatus.OK).json({message: "User Created", user: userCreated});
-  }
 }
