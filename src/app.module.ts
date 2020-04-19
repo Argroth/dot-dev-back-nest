@@ -4,11 +4,11 @@ import { AppService } from './app.service';
 import { EmailSenderModule } from './email-sender/email-sender.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { ConfigModule } from '@nestjs/config';
-import { ProjectsController } from './eko-tynki/projects/projects.controller';
-import { ProjectsModule } from './eko-tynki/projects/projects.module';
 import { UsersModule } from './users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AuthModule } from './auth/auth.module';
+import { ProjectsModule } from './dot-dev/projects/projects.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [EmailSenderModule, ConfigModule.forRoot(), MailerModule.forRoot({
@@ -29,10 +29,11 @@ import { AuthModule } from './auth/auth.module';
     defaults: {
       from:'"Mailer .Dev" ',
     },
-  }), ProjectsModule, UsersModule,
-    MongooseModule.forRoot('mongodb://localhost:27017/nest-blog', {useNewUrlParser: true, useUnifiedTopology: true}), UsersModule, AuthModule,
+  }), UsersModule, UsersModule, ProjectsModule,
+    MongooseModule.forRoot('mongodb://localhost:27017/nest-blog', {useNewUrlParser: true, useUnifiedTopology: true}),
+    ServeStaticModule.forRoot({rootPath: join(__dirname, "..", 'static')}),
 ],
-  controllers: [AppController, ProjectsController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
